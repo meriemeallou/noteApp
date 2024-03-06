@@ -1,21 +1,20 @@
 <template>
-    <div class="container my-3">
-       <h1>Add a Note</h1>
-       <div class="card my-2 mx-2">
-         <div class="card-body">
-           <form @submit.prevent="addNote">
-             <div class="form-group">
-               <input type="text" placeholder="Enter Note name here" class="form-control" v-model="name"><br>
-               <textarea class="form-control" rows="3" placeholder="Enter note description here" v-model="description"></textarea>
-             </div>
-             <button type="submit" class="btn btn-primary" >Add Note</button>
-           </form>
-         </div>
-       </div>
-       <h1>Your Notes</h1>
-       <div class="row container-fluid" id="notes"></div>
+  <div class="container my-3">
+    <h1 style="text-align: center;">Add a Note</h1>
+    <div class="card my-2 mx-auto" style="max-width: 400px;">
+      <div class="card-body">
+        <form>
+          <div class="form-group">
+            <input type="text" placeholder="Enter Note name here" class="form-control" v-model="name"><br>
+            <textarea class="form-control" rows="3" placeholder="Enter note description here" v-model="description"></textarea>
+          </div><br>
+          <button type="submit" class="btn btn-outline-primary" v-on:click="addNote">Add Note</button>
+        </form>
+      </div>
     </div>
-   </template>
+    <div class="row container-fluid" id="notes"></div>
+  </div>
+</template>
    
    <script>
    import axios from 'axios';
@@ -25,7 +24,8 @@
     data() {
        return {
          name: '',
-         description: ''
+         description: '',
+         date:''
        }
     },
     methods: {
@@ -34,7 +34,8 @@
            try {
              let result = await axios.post('http://localhost:3000/notes', {
                name: this.name,
-               description: this.description
+               description: this.description,
+               date:new Date().toLocaleString()
              });
              console.log(result);
              this.name = '';
@@ -47,4 +48,16 @@
     }
    }
    </script>
+   <style>
+  .btn-outline-primary {
+ background-color: transparent; 
+ border-color: rgb(85, 85, 168);
+ color: rgb(85, 85, 168);
+}
+
+.btn-outline-primary:hover {
+ background-color: rgb(85, 85, 168); 
+ color: white; 
+}
+  </style>
    
